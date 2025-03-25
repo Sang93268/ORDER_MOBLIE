@@ -14,89 +14,88 @@ type BanScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Ban'>;
 interface Table {
     id: number;
     name: string;
-    status: 'available' | 'occupied' | 'reserved';
+    status: 'noiBo' | 'dangMo' | 'banHang';
 }
 
 const Ban = () => {
     const navigation = useNavigation<BanScreenNavigationProp>();
     const [selectedTable, setSelectedTable] = useState<Table | null>(null);
-    const [filter, setFilter] = useState<'all' | 'available' | 'occupied' | 'reserved'>('all');
+    const [filter, setFilter] = useState<'all' | 'noiBo' | 'dangMo' | 'banHang'>('all');
 
     const [tables] = useState<Table[]>([
-        { id: 1, name: 'Bàn 1', status: 'available' },
-        { id: 2, name: 'Bàn 2', status: 'occupied' },
-        { id: 3, name: 'Bàn 3', status: 'reserved' },
-        { id: 4, name: 'Bàn 4', status: 'available' },
-        { id: 5, name: 'Bàn 5', status: 'available' },
-        { id: 6, name: 'Bàn 6', status: 'occupied' },
-        { id: 7, name: 'Bàn 7', status: 'available' },
-        { id: 8, name: 'Bàn 8', status: 'available' },
-        { id: 9, name: 'Bàn 9', status: 'available' },
-        { id: 10, name: 'Bàn 10', status: 'available' },
-        { id: 11, name: 'Bàn 11', status: 'available' },
-        { id: 12, name: 'Bàn 12', status: 'available' },
+        { id: 1, name: 'Bàn 1', status: 'noiBo' },
+        { id: 2, name: 'Bàn 2', status: 'dangMo' },
+        { id: 3, name: 'Bàn 3', status: 'banHang' },
+        { id: 4, name: 'Bàn 4', status: 'noiBo' },
+        { id: 5, name: 'Bàn 5', status: 'noiBo' },
+        { id: 6, name: 'Bàn 6', status: 'dangMo' },
+        { id: 7, name: 'Bàn 7', status: 'noiBo' },
+        { id: 8, name: 'Bàn 8', status: 'noiBo' },
+        { id: 9, name: 'Bàn 9', status: 'noiBo' },
+        { id: 10, name: 'Bàn 10', status: 'noiBo' },
+        { id: 11, name: 'Bàn 11', status: 'noiBo' },
+        { id: 12, name: 'Bàn 12', status: 'noiBo' },
     ]);
 
     // Lọc bàn theo trạng thái
-    const filteredTables = filter === 'all' 
-        ? tables 
+    const filteredTables = filter === 'all'
+        ? tables
         : tables.filter(table => table.status === filter);
 
     const getTableIcon = (status: string) => {
         switch (status) {
-            case 'available': return '🍽️';
-            case 'occupied': return '👨‍🍳';
-            case 'reserved': return '⏱️';
+            case 'noiBo': return '🍽️';
+            case 'dangMo': return '👨‍🍳';
+            case 'banHang': return '⏱️';
             default: return '🍽️';
         }
     };
 
     const getStatusColor = (status: string) => {
         switch (status) {
-            case 'available': return '#F44336';
-            case 'occupied': return '#4CAF50';
-            case 'reserved': return '#FFC107';
+            case 'noiBo': return '#F44336';
+            case 'dangMo': return '#4CAF50';
+            case 'banHang': return '#FFC107';
             default: return '#F44336';
         }
     };
 
     const getStatusText = (status: string) => {
         switch (status) {
-            case 'available': return 'Trống';
-            case 'occupied': return 'Đang phục vụ';
-            case 'reserved': return 'Đã đặt';
-            default: return 'Trống';
+            case 'noiBo': return 'Nội bộ';
+            case 'dangMo': return 'Đang mở';
+            case 'banHang': return 'Bán hàng';
+            default: return 'Nội bộ';
         }
     };
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle="dark-content" />
-            
             <View style={styles.filterContainer}>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filterScroll}>
-                    <TouchableOpacity 
-                        style={[styles.filterButton, filter === 'all' && styles.filterButtonActive]} 
+                    <TouchableOpacity
+                        style={[styles.filterButton, filter === 'all' && styles.filterButtonActive]}
                         onPress={() => setFilter('all')}
                     >
                         <Text style={[styles.filterText, filter === 'all' && styles.filterTextActive]}>Tất cả</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity 
-                        style={[styles.filterButton, filter === 'available' && styles.filterButtonActive]} 
-                        onPress={() => setFilter('available')}
+                    <TouchableOpacity
+                        style={[styles.filterButton, filter === 'noiBo' && styles.filterButtonActive]}
+                        onPress={() => setFilter('noiBo')}
                     >
-                        <Text style={[styles.filterText, filter === 'available' && styles.filterTextActive]}>Bàn trống</Text>
+                        <Text style={[styles.filterText, filter === 'noiBo' && styles.filterTextActive]}>Nội bộ</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity 
-                        style={[styles.filterButton, filter === 'occupied' && styles.filterButtonActive]} 
-                        onPress={() => setFilter('occupied')}
+                    <TouchableOpacity
+                        style={[styles.filterButton, filter === 'dangMo' && styles.filterButtonActive]}
+                        onPress={() => setFilter('dangMo')}
                     >
-                        <Text style={[styles.filterText, filter === 'occupied' && styles.filterTextActive]}>Đang phục vụ</Text>
+                        <Text style={[styles.filterText, filter === 'dangMo' && styles.filterTextActive]}>Đang mở</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity 
-                        style={[styles.filterButton, filter === 'reserved' && styles.filterButtonActive]} 
-                        onPress={() => setFilter('reserved')}
+                    <TouchableOpacity
+                        style={[styles.filterButton, filter === 'banHang' && styles.filterButtonActive]}
+                        onPress={() => setFilter('banHang')}
                     >
-                        <Text style={[styles.filterText, filter === 'reserved' && styles.filterTextActive]}>Đã đặt</Text>
+                        <Text style={[styles.filterText, filter === 'banHang' && styles.filterTextActive]}>Bán hàng</Text>
                     </TouchableOpacity>
                 </ScrollView>
             </View>
@@ -104,15 +103,15 @@ const Ban = () => {
             <View style={styles.legendContainer}>
                 <View style={styles.legendItem}>
                     <View style={[styles.legendColor, { backgroundColor: '#F44336' }]} />
-                    <Text style={styles.legendText}>Trống</Text>
+                    <Text style={styles.legendText}>Nội bộ</Text>
                 </View>
                 <View style={styles.legendItem}>
                     <View style={[styles.legendColor, { backgroundColor: '#4CAF50' }]} />
-                    <Text style={styles.legendText}>Đang phục vụ</Text>
+                    <Text style={styles.legendText}>Đang mở</Text>
                 </View>
                 <View style={styles.legendItem}>
                     <View style={[styles.legendColor, { backgroundColor: '#FFC107' }]} />
-                    <Text style={styles.legendText}>Đã đặt</Text>
+                    <Text style={styles.legendText}>Bán hàng</Text>
                 </View>
             </View>
 
@@ -130,7 +129,7 @@ const Ban = () => {
                         <View style={styles.tableWrapper}>
                             <TouchableOpacity
                                 style={[
-                                    styles.tableItem, 
+                                    styles.tableItem,
                                     { borderColor: getStatusColor(item.status) },
                                     selectedTable?.id === item.id && styles.selectedTableItem
                                 ]}
